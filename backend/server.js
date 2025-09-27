@@ -14,7 +14,7 @@ const allowedOrigins = [
   /\.vercel\.app$/ // allow any Vercel subdomain
 ];
 
-app.use(cors({
+const corsOptions = {
   origin: function (origin, callback) {
     if (!origin) return callback(null, true);
     if (allowedOrigins.some(o => (o instanceof RegExp ? o.test(origin) : o === origin))) {
@@ -24,8 +24,13 @@ app.use(cors({
   },
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true
-}));
+};
 
+// Apply CORS to all routes
+app.use(cors(corsOptions));
+
+// Handle OPTIONS preflight requests
+app.options('*', cors(corsOptions));
 // ------------------------
 // Dynamic CORS Setup End
 // ------------------------
