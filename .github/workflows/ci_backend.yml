@@ -2,11 +2,7 @@ name: Backend CI/CD - Build and Push
 
 on:
   push:
-    branches: [ main ] # Trigger on a push to the main branch
-    # paths:
-    #   - 'backend/**'  <-- Is line ko ya toh hata denge, ya comment kar denge (# laga kar)
-  
-  # NEW: Isse aap GitHub UI se manually run kar sakte hain
+    branches: [ main ]
   workflow_dispatch: 
 
 jobs:
@@ -14,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      packages: write # Necessary to push to GHCR
+      packages: write
 
     steps:
       - name: Checkout Code
@@ -28,15 +24,16 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          # Uses the secret you created on GitHub 
-          password: ${{ secrets.CR_PAT }} 
+          password: ${{ secrets.CR_PAT }}
+
+      - name: Set lowercase repo name
+        run: echo "REPO_LOWER=$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
 
       - name: Build and Push Backend Image
         uses: docker/build-push-action@v5
         with:
-          context: ./backend 
+          context: ./backend
           push: true
-          # FIX: Removed toLowerCase()
-          tags: ghcr.io/${{ github.repository }}/backend:latest
+          tags: ghcr.io/${{ env.REPO_LOWER }}/backend:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
