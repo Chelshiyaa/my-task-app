@@ -3,9 +3,22 @@ const express = require('express');
 const cors = require('cors');
 const connectDB = require('./config/db');
 const tasksRoute = require('./routes/tasks');
+const VERCEL_FRONTEND_URL = 'https://<YOUR_FINAL_VERCEL_DOMAIN>';
+
+const corsOptions = {
+    // This allows requests ONLY from your Vercel frontend domain.
+    origin: VERCEL_FRONTEND_URL, 
+    // This allows the necessary methods (POST, PUT, DELETE) for your API.
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+    optionsSuccessStatus: 204
+};
 
 const app = express();
-app.use(cors());
+
+// 2. Use the configured CORS options instead of simple cors()
+app.use(cors(corsOptions)); 
+
 app.use(express.json());
 
 app.use('/api/tasks', tasksRoute);
