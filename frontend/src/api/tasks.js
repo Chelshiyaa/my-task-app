@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/api/tasks";
+const API_URL = process.env.API_URL ;
 
 export const getTasks = async (params = {}) => {
   const res = await axios.get(API_URL, { params });
