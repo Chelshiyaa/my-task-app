@@ -3,7 +3,8 @@ const express = require('express');
 const cors = require('cors');
 const connectDB = require('./config/db');
 const tasksRoute = require('./routes/tasks');
-const VERCEL_FRONTEND_URL = 'https://<YOUR_FINAL_VERCEL_DOMAIN>';
+const VERCEL_FRONTEND_URL = 'https://my-task-app.vercel.app'; // replace with real domain
+
 
 const corsOptions = {
     // This allows requests ONLY from your Vercel frontend domain.
