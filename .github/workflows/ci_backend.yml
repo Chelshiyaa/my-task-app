@@ -3,9 +3,12 @@ name: Backend CI/CD - Build and Push
 on:
   push:
     branches: [ main ] # Trigger on a push to the main branch
-    paths:
-      - 'backend/**' # IMPORTANT: Only run if files in the 'backend/' directory change
-
+    # paths:
+    #   - 'backend/**'  <-- Is line ko ya toh hata denge, ya comment kar denge (# laga kar)
+  
+  # NEW: Isse aap GitHub UI se manually run kar sakte hain
+  workflow_dispatch: 
+  
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
