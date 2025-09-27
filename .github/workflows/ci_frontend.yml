@@ -34,9 +34,10 @@ jobs:
       - name: Build and Push Frontend Image
         uses: docker/build-push-action@v5
         with:
-          context: ./frontend # The build context is set to the frontend folder
+          context: ./frontend 
           push: true
-          # The tag format will be: ghcr.io/YOUR_GITHUB_USER/YOUR_REPO_NAME/frontend:latest
-          tags: ghcr.io/${{ github.repository }}/frontend:latest 
+          # OLD: tags: ghcr.io/${{ github.repository }}/frontend:latest 
+          # NEW: Is expression se repository ka naam lowercase ho jaega:
+          tags: ghcr.io/${{ github.repository | lower }}/frontend:latest 
           cache-from: type=gha
           cache-to: type=gha,mode=max

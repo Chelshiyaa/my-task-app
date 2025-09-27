@@ -8,7 +8,7 @@ on:
   
   # NEW: Isse aap GitHub UI se manually run kar sakte hain
   workflow_dispatch: 
-  
+
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
@@ -34,9 +34,10 @@ jobs:
       - name: Build and Push Backend Image
         uses: docker/build-push-action@v5
         with:
-          context: ./backend # The build context is set to the backend folder
+          context: ./backend 
           push: true
-          # The tag format will be: ghcr.io/YOUR_GITHUB_USER/YOUR_REPO_NAME/backend:latest
-          tags: ghcr.io/${{ github.repository }}/backend:latest 
+          # OLD: tags: ghcr.io/${{ github.repository }}/backend:latest 
+          # NEW: Is expression se repository ka naam lowercase ho jaega:
+          tags: ghcr.io/${{ github.repository | lower }}/backend:latest 
           cache-from: type=gha
           cache-to: type=gha,mode=max
