@@ -36,7 +36,6 @@ jobs:
         with:
           context: ./frontend 
           push: true
-          # FIX: Poori expression ko single quotes ke andar rakhen:
-          tags: 'ghcr.io/${{ github.repository | lower }}/frontend:latest'
+          tags: ghcr.io/${{ github.repository.toLowerCase() }}/frontend:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
