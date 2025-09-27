@@ -36,8 +36,7 @@ jobs:
         with:
           context: ./backend 
           push: true
-          # OLD: tags: ghcr.io/${{ github.repository }}/backend:latest 
-          # NEW: Is expression se repository ka naam lowercase ho jaega:
-          tags: ghcr.io/${{ github.repository | lower }}/backend:latest 
+          # FIX: Poori expression ko single quotes ke andar rakhen:
+          tags: 'ghcr.io/${{ github.repository | lower }}/backend:latest'
           cache-from: type=gha
           cache-to: type=gha,mode=max
