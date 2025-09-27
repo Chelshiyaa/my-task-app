@@ -11,22 +11,21 @@ const app = express();
 // ------------------------
 const allowedOrigins = [
   'http://localhost:5173',
-  'https://my-task-app.vercel.app'  // replace with your actual Vercel frontend URL
+  /\.vercel\.app$/ // allow any Vercel subdomain
 ];
 
 app.use(cors({
   origin: function (origin, callback) {
-    // allow requests with no origin (like Postman)
     if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) === -1) {
-      const msg = `The CORS policy for this site does not allow access from the specified Origin: ${origin}`;
-      return callback(new Error(msg), false);
+    if (allowedOrigins.some(o => (o instanceof RegExp ? o.test(origin) : o === origin))) {
+      return callback(null, true);
     }
-    return callback(null, true);
+    return callback(new Error(`CORS policy does not allow access from: ${origin}`), false);
   },
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true
 }));
+
 // ------------------------
 // Dynamic CORS Setup End
 // ------------------------
